@@ -25,11 +25,11 @@ Vagrant.configure("2") do |config|
       sudo apt-get update
       sudo apt-get install -y mysql-server rsyslog ufw lynis      
       # Allow ssh from vagrant
-      sudo ufw allow 2222
+      # sudo ufw allow 2222
       
       # Set UFW default policies
-      sudo ufw default deny incoming
-      sudo ufw default allow outgoing
+      # sudo ufw default deny incoming
+      # sudo ufw default allow outgoing
 
       # Allow only the Web Server to connect on MySQL 
       sudo ufw allow in from 192.168.57.83 to any port 3306
