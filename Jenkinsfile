@@ -2,6 +2,13 @@ pipeline {
     agent any
 
     stages {
+        stage('Test Vault Credentials') {
+            steps {
+                withCredentials([[$class: 'VaultUsernamePasswordCredentialBinding', credentialsId: 'vault-jenkins', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME']]) {
+                    echo "Retrieved Vault Credentials: Username=${USERNAME}, Password=${PASSWORD}"
+                }
+            }
+        }
         // Security Check Stage
         stage('Security Check') {
             steps {
@@ -35,10 +42,6 @@ pipeline {
         // Testing Database Server
         stage('Testing Database Server') {
             steps {
-                // echo 'Testing Database Server Connectivity and MySQL Status...'
-                // script {
-                //     bat '''vagrant ssh db_server -c "systemctl status mysql | grep Active"'''
-                // }
                 withCredentials([[$class: 'VaultUsernamePasswordCredentialBinding', credentialsId: 'vault-jenkins', passwordVariable: 'DB_PASSWORD', usernameVariable: 'DB_USERNAME']]) {
                     // Use the Vault credentials for testing connection
                     sh """
