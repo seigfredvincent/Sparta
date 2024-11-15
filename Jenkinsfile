@@ -2,17 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Retrieve Vault Server IP') {
-            steps {
-                script {
-                    // Run a command to get the host's IP address and assign it to VAULT_ADDR
-                    def hostIp = sh(script: """hostname -I | awk '{print \$1}'""", returnStdout: true).trim()
-                    env.VAULT_ADDR = "http://${hostIp}:8200"
-                    echo "Vault server IP set to: ${env.VAULT_ADDR}"
-                }
-            }
-        }
-        
         // Security Check Stage
         stage('Security Check') {
             steps {
