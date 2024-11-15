@@ -42,10 +42,10 @@ pipeline {
         // Testing Database Server
         stage('Testing Database Server') {
             steps {
-                withCredentials([[$class: 'VaultUsernamePasswordCredentialBinding', credentialsId: 'vault-jenkins', passwordVariable: 'DB_PASSWORD', usernameVariable: 'DB_USERNAME']]) {
+                withCredentials([[$class: 'VaultUsernamePasswordCredentialBinding', credentialsId: 'vault-jenkins', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME']]) {
                     // Use the Vault credentials for testing connection
                     sh """
-                    vagrant ssh web_server -c "mysql -h 192.168.57.81 -u $DB_USERNAME -p$DB_PASSWORD -e 'SHOW DATABASES;'"
+                    vagrant ssh web_server -c "mysql -h 192.168.57.81 -u $USERNAME -p$PASSWORD -e 'SHOW DATABASES;'"
                     """
                 }
             }
