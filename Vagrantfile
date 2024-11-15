@@ -1,6 +1,4 @@
 Vagrant.configure("2") do |config|
-  host_ip = `hostname -I | awk '{print $1}'`.strip
-
   config.vm.define "web_server" do |web|
     web.vm.box = "hashicorp/bionic64"
     web.vm.network "private_network", ip: "192.168.57.83"
@@ -39,7 +37,7 @@ Vagrant.configure("2") do |config|
       #Enable UFW
       sudo ufw enable
 
-      export VAULT_ADDR='http://#{host_ip}:8200'
+      export VAULT_ADDR='http://127.0.0.1:8200'
       export VAULT_TOKEN='vault-jenkins'
 
       # Retrieve MySQL credentials from Vault
